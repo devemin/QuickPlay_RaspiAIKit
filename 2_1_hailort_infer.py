@@ -1,15 +1,18 @@
 ﻿#!/usr/bin/env python3
 
-# This sample is from Hailo-Application-Code-Examples/runtime/python/yolox_streaming_inference/yolox_stream_inference.py
 
 
+
+# このサンプルコードは Hailo-Application-Code-Examples/runtime/python/yolox_streaming_inference/yolox_stream_inference.py
+# からきてます。 README をまず読んでみてください。（リソースダウンロードコマンド実行などあります）
 
 # HEF, hailort, user guide, p245 (PDF p249)
-# 
+
+# python obj 確認 https://zenn.dev/ynakashi/articles/15b2b7c0a3cd89
+
+# v や c キーを押すと、USBカメラと録画映像が切り替わります。
 
 
-
-# python obj kakunin https://zenn.dev/ynakashi/articles/15b2b7c0a3cd89
 
 
 import cv2
@@ -33,6 +36,8 @@ from hailo_platform import (HEF, Device, VDevice, HailoStreamInterface, InferVSt
 INPUT_RES_H = 640
 INPUT_RES_W = 640
 
+
+# ここのパスで *.hef モデルファイル (Hailo 8L 用) を指定してください。
 # Loading compiled HEFs to device:
 model_name = 'yolox_s_leaky_h8l_mz'
 #model_name = 'yolov8s_pose_h8l_pi'
@@ -52,11 +57,14 @@ with VDevice(device_ids=devices) as target:
         network_group_params = network_group.create_params()
         input_vstream_info = hef.get_input_vstream_infos()[0]
         output_vstream_info = hef.get_output_vstream_infos()[0]
+        
+        # format_type=FormatType.FLOAT32 のところをモデルに合わせる
         input_vstreams_params = InputVStreamParams.make_from_network_group(network_group, quantized=False, format_type=FormatType.FLOAT32)
         output_vstreams_params = OutputVStreamParams.make_from_network_group(network_group, quantized=False, format_type=FormatType.FLOAT32)
         height, width, channels = hef.get_input_vstream_infos()[0].shape
 
 
+        # このあたりは、各種オブジェクトのプロパティなどの中身のチェックの書きなぐりです。
         def ShowVstreamInfo(vsinfo, nmsflag=False):
             print("======================= VstreamInfo start.========================")
             print(vsinfo)
@@ -335,6 +343,7 @@ with VDevice(device_ids=devices) as target:
             #print(anchors)
             
             '''
+            # ?
             endnodes = [infer_results[layer_from_shape[1, 80, 80, 4]],  # stride 8 
                         infer_results[layer_from_shape[1, 80, 80, 1]],  # stride 8 
                         infer_results[layer_from_shape[1, 80, 80, 80]], # stride 8 
@@ -352,6 +361,7 @@ with VDevice(device_ids=devices) as target:
 
 
             '''
+            # ここは hailo_model_zoo がインストールされていないと実行できませんが、ラズパイではうまくできませんでしたのでコメントアウトしてます。
             from hailo_model_zoo.core.postprocessing.detection import yolo
             # postprocessing info for constructor as recommended in hailo_model_zoo/cfg/base/yolox.yaml
             anchors = {"strides": [32, 16, 8], "sizes": [[1, 1], [1, 1], [1, 1]]}

@@ -1,4 +1,9 @@
-﻿import numpy as np
+﻿
+# hailo tutorial にあるサンプルからです。
+# https://github.com/hailo-ai/hailort/tree/e2190aeda847ab22057d162d08b516c39ac36ab8/hailort/libhailort/bindings/python/platform/hailo_tutorials/notebooks
+# より
+
+import numpy as np
 from multiprocessing import Process
 from hailo_platform import (HEF, VDevice, HailoStreamInterface, InferVStreams, ConfigureParams,
     InputVStreamParams, OutputVStreamParams, InputVStreams, OutputVStreams, FormatType, HailoSchedulingAlgorithm)

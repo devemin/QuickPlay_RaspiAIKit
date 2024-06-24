@@ -1,4 +1,13 @@
-﻿from hailo_sdk_client import ClientRunner
+﻿
+
+# 参考
+# https://qiita.com/ysuito/items/a1cdd6e291aa4cb01ca6
+# https://www.macnica.co.jp/business/semiconductor/articles/hailo/144988/
+# https://www.macnica.co.jp/business/semiconductor/articles/hailo/145097/
+# https://www.macnica.co.jp/business/semiconductor/articles/hailo/144843/
+
+
+from hailo_sdk_client import ClientRunner
 import numpy as np
 #import os
 
